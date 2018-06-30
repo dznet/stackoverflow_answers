@@ -1,14 +1,16 @@
 #!/usr/bin/python3
-
 from sys import exc_info as error
 from urllib.request import urlopen
 from urllib.parse import urlencode
 import json
 
-TOKEN = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+TOKEN = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 URL = 'https://api.telegram.org/bot{}'.format(TOKEN)
+
 STATUS = True
 OFFSET = 0
+LIMIT = 0
+TIMEOUT = 0
 
 def call_api_method(method='getMe', data=None):
   # Call API method with data.
@@ -23,12 +25,12 @@ def get_me():
 
 def get_updates():
   # Get new updates from Telegram.
-  data = {'offset': OFFSET, 'limit': 0, 'timeout': 0}
+  data = {'offset': OFFSET, 'limit': LIMIT, 'timeout': TIMEOUT}
   return type('Updates', (), call_api_method('getUpdates', data))
 
 def handle(update):
   # Make usefull objects.
-  message = type('Message', (object,), dict(update['message']))
+  message = type('Message', (), dict(update['message']))
   user = type('User', (), dict(update['message']['from']))
   chat = type('Chat', (), dict(update['message']['chat']))
   return message, user, chat
@@ -47,7 +49,7 @@ def send_keyboard(chat_id, message, keyboard):
           'chat_id': chat_id,
           'parse_mode': 'Markdown',
           'reply_markup': reply_markup(keyboard),
-          'disable_web_page_preview': 'true'}
+          'disable_web_page_preview': True}
   call_api_method('sendMessage', data)
 
 def reply_markup(keyboard):
@@ -74,7 +76,7 @@ def second_button():
   return ['second button']
 
 def two_buttons():
-  # Two buttons on one line.
+  # Two buttons in one line.
   return ['left button', 'right button']
 
 
@@ -92,9 +94,7 @@ while STATUS:
     for update in updates.result:
       # Handle last update.
       OFFSET = update['update_id'] + 1
-      print(OFFSET)
       message, user, chat = handle(update)
-
       # Greeting user by full name.
       greeting = 'Hello, {} {}!'.format(user.first_name, user.last_name)
 
