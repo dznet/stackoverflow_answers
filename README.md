@@ -1,1 +1,4 @@
-Collection of my answers on https://stackoverflow.com/questions/*filename*/. The filename is the same as the question ID.
+Collection of my working Telegram bots for answers on https://stackoverflow.com  
+The filename is the same as the question ID.  
+
+Help to build bots to everyone. Stay tune!
