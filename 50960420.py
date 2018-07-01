@@ -33,8 +33,8 @@ def artist(bot, update):
 
 def download(bot, update):
   file = update.message.text.replace('/dl_', '')
-  update.message.reply_text(u'\U0001F3BC\nhttp://music.com/{}.mp3'.format(file),
-                            parse_mode='Markdown')
+  link = u'\U0001F3BC\nhttp://music.com/{}.mp3'.format(file)
+  update.message.reply_text(link, parse_mode='Markdown')
 
 try:
   updater = Updater(token)
@@ -59,8 +59,10 @@ def genre_head():
   return '*What your favorite genre?*\n'
 
 def genre_list(genre_name, genre_id):
-  return '\n{}*{}*\n[ Choose {} /dl_{} ]\n'.format(u'\U0001F3B6', genre_name,
-                                                   u'\U0001F449', genre_id)
+  return '\n{}*{}*\n[ Choose {} /dl_{} ]\n'.format(u'\U0001F3B6',
+                                                   genre_name,
+                                                   u'\U0001F449',
+                                                   genre_id)
 
 def artist_head(genre_name):
   return 'What artist in {}*{}* you are looking for?\n'.format(u'\U0001F3B6',
